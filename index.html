@@ -13,11 +13,37 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- stylesheet -->
+     <link rel="stylesheet" href="styles.css">
     <title>Github Issues Tracker</title>
 </head>
 
 <body>
+    <!-- sign in section -->
+    <section class="w-full max-w-sm mx-auto">
+        <fieldset class="fieldset bg-base-200 border-base-300 rounded-box border p-4">
+            <div class="flex justify-center">
+                <div class="space-y-1">
+                    <div class="flex justify-center">
+                        <div>
+                            <img src="./assets/github-logo.png" alt="github-logo">
+                        </div>
+                    </div>
+                    <h2 class="text-center text-2xl font-bold">GitHub Issues Tracker</h2>
+                    <p class="text-center text-base text-[#64748B]">Sign in to manage your issues</p>
+                </div>
+            </div>
 
+            <label class="label">Email</label>
+            <input type="email" class="input w-full" placeholder="Email" />
+
+            <label class="label">Password</label>
+            <input type="password" class="input w-full" placeholder="Password" />
+
+            <button class="btn btn-neutral mt-4">Sign In</button>
+        </fieldset>
+    </section>
 </body>
 
 </html>
