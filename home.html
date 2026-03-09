@@ -25,13 +25,17 @@
 
 <body>
     <!-- navbar -->
-    <nav>
-        <div class="navbar bg-base-100 shadow-sm">
-            <div class="flex-1">
-                <a class="btn btn-ghost text-xl">daisyUI</a>
+    <nav class="navbar bg-base-100 shadow-sm">
+        <div class="flex flex-1 max-w-screen-xl mx-auto">
+            <div class="flex flex-1 items-center gap-2">
+                  <img class="h-10" src="./assets/github-logo.png" alt="github-logo">
+                    <p class="font-bold text-sm lg:text-xl">GitHub Issues Tracker</p>   
             </div>
-            <div class="flex gap-2">
-                <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+
+            <div class="relative flex gap-2">
+                <i class="fa-brands fa-sistrix absolute top-3 z-10"></i>
+                <input type="text" placeholder="Search Issues..." class="input input-bordered w-24 md:w-auto pl-5" />
+                <button class="btn btn-primary">Search</button>
             </div>
         </div>
     </nav>
