@@ -30,25 +30,30 @@ const displayOpenCard = (cards) => {
         console.log(card);
         const openCards = document.createElement('div');
         openCards.innerHTML = `
-        <div>
-                <div class="card w-full lg:w-60 bg-base-100 card-sm shadow-sm border border-gray-200">
-                    <div class="card-body">
+        <div class="h-full">
+                <div class="card h-full w-full lg:w-60 bg-base-100 card-sm shadow-sm border border-gray-200 border-t-4 
+                ${card.status ==='open'?`border-t-[#00A96E]`:`border-t-[#A855F7]`}">
+                
+                    <div class="card-body h-full">
                         <div class="flex justify-between items-center">
                             <div class="flex justify-between">
                                 <div>
-                                    <img class="w-8 h-8"  src="./assets/Open-Status.png" alt="Open-Status">
+                                    ${card.status === 'open'?`<img class="w-8 h-8"  src="./assets/Open-Status.png" alt="Open-Status"></img>`:`<img class="w-8 h-8"  src="./assets/Closed- Status .png"  alt="Closed-Status"></img>`}
                                 </div>
                         </div>
-                            <button class="btn border border-[#EF4444] rounded-lg  bg-[#FEECEC] text-[#EF4444]">High</button>
+                            <button class="btn border rounded-lg ${card.priority === 'medium'?`bg-[#FDE68A] text-[#D97706] border-[#D97706]`:
+                                 card.priority === 'low' ? `bg-[#EEEFF2] text-[#9CA3AF] border-[#9CA3AF]`:`bg-[#FEECEC] text-[#EF4444] border-[#EF4444]`}">
+                                 ${card.priority}
+                            </button>
                         </div>
-                        <h3 class="text-lg font-semibold">Fix navigation menu on mobile devices</h3>
-                                <p class="gray">The navigation menu doesn't collapse properly on mobile devices...</p>
+                        <h3 class="text-lg font-semibold">${card.title}</h3>
+                                <p class="gray">${card.description}</p>
                                 <div>
                                     <button class="btn border border-[#EF4444] rounded-lg bg-[#FEECEC] text-[#EF4444] ">Bug</button>
                                     <button class="btn border border-[#D97706] rounded-lg bg-[#FDE68A] text-[#D97706] ">Help Wanted</button>
                                 </div>
                                 <hr class="border border-gray-200 w-full">
-                                <p class="text-sm gray">#1by john_doe <br> <span class="text-xs gray">1/15/2024</span></p>
+                                <p class="text-sm gray">#<span>${card.id}</span> by ${card.author} <br> <span class="text-xs gray">${new Date(card.createdAt).toLocaleDateString()}</span></p>
                     </div>
                 </div>
             </div>
@@ -86,25 +91,30 @@ const displayClosedCard = (cards) => {
         console.log(card);
         const closedCards = document.createElement('div');
         closedCards.innerHTML = `
-        <div>
-                <div class="card w-full lg:w-60 bg-base-100 card-sm shadow-sm border border-gray-200">
-                    <div class="card-body">
+        <div class="h-full">
+                <div class="card h-full w-full lg:w-60 bg-base-100 card-sm shadow-sm border border-gray-200 border-t-4 
+                ${card.status ==='open'?`border-t-[#00A96E]`:`border-t-[#A855F7]`}">
+                
+                    <div class="card-body h-full">
                         <div class="flex justify-between items-center">
                             <div class="flex justify-between">
                                 <div>
-                                    <img class="w-8 h-8"  src="./assets/Open-Status.png" alt="Open-Status">
+                                    ${card.status === 'open'?`<img class="w-8 h-8"  src="./assets/Open-Status.png" alt="Open-Status"></img>`:`<img class="w-8 h-8"  src="./assets/Closed- Status .png"  alt="Closed-Status"></img>`}
                                 </div>
                         </div>
-                            <button class="btn border border-[#EF4444] rounded-lg  bg-[#FEECEC] text-[#EF4444]">High</button>
+                            <button class="btn border rounded-lg ${card.priority === 'medium'?`bg-[#FDE68A] text-[#D97706] border-[#D97706]`:
+                                 card.priority === 'low' ? `bg-[#EEEFF2] text-[#9CA3AF] border-[#9CA3AF]`:`bg-[#FEECEC] text-[#EF4444] border-[#EF4444]`}">
+                                 ${card.priority}
+                            </button>
                         </div>
-                        <h3 class="text-lg font-semibold">Fix navigation menu on mobile devices</h3>
-                                <p class="gray">The navigation menu doesn't collapse properly on mobile devices...</p>
+                        <h3 class="text-lg font-semibold">${card.title}</h3>
+                                <p class="gray">${card.description}</p>
                                 <div>
                                     <button class="btn border border-[#EF4444] rounded-lg bg-[#FEECEC] text-[#EF4444] ">Bug</button>
                                     <button class="btn border border-[#D97706] rounded-lg bg-[#FDE68A] text-[#D97706] ">Help Wanted</button>
                                 </div>
                                 <hr class="border border-gray-200 w-full">
-                                <p class="text-sm gray">#1by john_doe <br> <span class="text-xs gray">1/15/2024</span></p>
+                                <p class="text-sm gray">#<span>${card.id}</span> by ${card.author} <br> <span class="text-xs gray">${new Date(card.createdAt).toLocaleDateString()}</span></p>
                     </div>
                 </div>
             </div>
@@ -128,9 +138,11 @@ const displayIssues = (issues) => {
 
         const allCards = document.createElement('div');
         allCards.innerHTML = `
-        <div>
-                <div class="card w-full lg:w-60 bg-base-100 card-sm shadow-sm border border-gray-200">
-                    <div class="card-body">
+        <div class="h-full">
+                <div class="card h-full w-full lg:w-60 bg-base-100 card-sm shadow-sm border border-gray-200 border-t-4 
+                ${card.status ==='open'?`border-t-[#00A96E]`:`border-t-[#A855F7]`}">
+                
+                    <div class="card-body h-full">
                         <div class="flex justify-between items-center">
                             <div class="flex justify-between">
                                 <div>
