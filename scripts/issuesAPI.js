@@ -3,6 +3,8 @@ const loadIssues = () => {
         .then((res) => res.json())
         .then(json => displayIssues(json.data));
 }
+
+
 // function for open button
 let openIssues;
 const loadOpenIssues = async (status) => {
@@ -123,22 +125,56 @@ const displayClosedCard = (cards) => {
     })
 }
 
+// display Modal for single issue
+const loadIssuesDetails= async(id) => {
+    const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    const res =await fetch(url);
+    const details = await res.json();
+    displayIssuesDetails(details.data);
+}
+const displayIssuesDetails = (modal) => {
+    console.log(modal);
+    const detailsBox = document.getElementById('details-container');
+    detailsBox.innerHTML=`
+    <div class="bg-base-100">
+            <h3 class="font-bold text-2xl">${modal.title}</h3>
+            <p class="gray mb-5">Opened by <span>${modal.assignee}</span> <span>${new Date(modal.updatedAt).toLocaleDateString()}</span></p>
+            <div class="flex gap-5">
+                                    <button class="btn border border-[#EF4444] rounded-lg bg-[#FEECEC] text-[#EF4444] ">Bug</button>
+                                    <button class="btn border border-[#D97706] rounded-lg bg-[#FDE68A] text-[#D97706] ">Help Wanted</button>
+                                </div>
+        <p class="gray mt-5 mb-10">${modal.description}</p>
+        <form class="flex gap-20">
+            <div>
+            <label>Assignee:</label>
+            <p class="font-bold">${modal.assignee}</p>
+            </div>
+            <div>
+                <label>Priority:</label> <br>
+                <p class="btn border rounded-lg px-7 ${modal.priority==='medium'?`bg-[#FDE68A] text-[#D97706] border-[#D97706]`:modal.priority === 'low' ? `bg-[#EEEFF2] text-[#9CA3AF] border-[#9CA3AF]`:`bg-[#FEECEC] text-[#EF4444] border-[#EF4444]`}"
+                >${modal.priority}</p>
+            </div>
+        </form>
+        </div>
+    `;
+    document.getElementById("my_modal_5").showModal();
+};
+
+
 
 // displayIssues function
 const displayIssues = (issues) => {
     const allIssuesNumber = document.getElementById('issue-number');
     allIssuesNumber.innerText = issues.length;
+
     const allIssues = document.getElementById('all-issues');
     allIssues.innerHTML = "";
 
     issues.forEach(card => {
         console.log(card);
-
-        
-
-        const allCards = document.createElement('div');
+       const allCards = document.createElement('div');
         allCards.innerHTML = `
-        <div class="h-full">
+        <div class="h-full" onclick="loadIssuesDetails(${card.id})">
                 <div class="card h-full w-full lg:w-60 bg-base-100 card-sm shadow-sm border border-gray-200 border-t-4 
                 ${card.status ==='open'?`border-t-[#00A96E]`:`border-t-[#A855F7]`}">
                 
@@ -166,7 +202,6 @@ const displayIssues = (issues) => {
                 </div>
             </div>
         `
-
         allIssues.append(allCards);
     })
 
@@ -174,22 +209,25 @@ const displayIssues = (issues) => {
     const btnContainer = document.getElementById('btn-container');
     btnContainer.innerHTML = "";
 
-    //    for(issue of issues){
     const btnDiv = document.createElement('div');
     btnDiv.innerHTML = `
-    <button 
-    id="tab-all" onclick="loadIssues()"
-    class="btn btn-outline px-6 lg:px-10 mr-3 lg:mr-5">All</button>
+    <button onclick="updateButtonStyle(this); loadIssues()"
+    class="btn-style btn btn-outline bg-primary text-white px-6 lg:px-10 mr-3 lg:mr-5">All</button>
 
-    <button 
-    id="tab-all" onclick="loadOpenIssues('open')"
-    class="btn btn-outline px-4 lg:px-8 mr-3 lg:mr-5">Open</button>
+    <button onclick="updateButtonStyle(this); loadOpenIssues('open')"
+    class="btn-style btn btn-outline px-4 lg:px-8 mr-3 lg:mr-5">Open</button>
 
-    <button 
-    id="tab-all" onclick="loadClosedIssues('closed')"
-    class="btn btn-outline px-3 lg:px-7">Closed</button>
+    <button onclick="updateButtonStyle(this); loadClosedIssues('closed')"
+    class="btn-style btn btn-outline px-3 lg:px-7">Closed</button>
     `
     btnContainer.append(btnDiv);
-    //    }
+}
+
+function updateButtonStyle(clickedBtn){
+    const buttons = document.querySelectorAll('.btn-style');
+    buttons.forEach(btn => 
+        btn.classList.remove('bg-primary', 'text-white')
+    );
+    clickedBtn.classList.add('bg-primary', 'text-white');
 }
 loadIssues();
