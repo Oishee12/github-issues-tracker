@@ -4,6 +4,41 @@ const loadIssues = () => {
         .then(json => displayIssues(json.data));
 }
 
+// display Modal for single issue
+const loadIssuesDetails= async(id) => {
+    const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    const res =await fetch(url);
+    const details = await res.json();
+    displayIssuesDetails(details.data);
+}
+const displayIssuesDetails = (modal) => {
+    console.log(modal);
+    const detailsBox = document.getElementById('details-container');
+    detailsBox.innerHTML=`
+    <div class="bg-base-100">
+            <h3 class="font-bold text-2xl">${modal.title}</h3>
+            <p class="gray mb-5">Opened by <span>${modal.assignee}</span> <span>${new Date(modal.updatedAt).toLocaleDateString()}</span></p>
+            <div class="flex gap-5">
+                                    <button class="btn border border-[#EF4444] rounded-lg bg-[#FEECEC] text-[#EF4444] ">Bug</button>
+                                    <button class="btn border border-[#D97706] rounded-lg bg-[#FDE68A] text-[#D97706] ">Help Wanted</button>
+                                </div>
+        <p class="gray mt-5 mb-10">${modal.description}</p>
+        <form class="flex gap-20">
+            <div>
+            <label>Assignee:</label>
+            <p class="font-bold">${modal.assignee}</p>
+            </div>
+            <div>
+                <label>Priority:</label> <br>
+                <p class="btn border rounded-lg px-7 ${modal.priority==='medium'?`bg-[#FDE68A] text-[#D97706] border-[#D97706]`:modal.priority === 'low' ? `bg-[#EEEFF2] text-[#9CA3AF] border-[#9CA3AF]`:`bg-[#FEECEC] text-[#EF4444] border-[#EF4444]`}"
+                >${modal.priority}</p>
+            </div>
+        </form>
+        </div>
+    `;
+    document.getElementById("my_modal_5").showModal();
+};
+
 
 // function for open button
 let openIssues;
@@ -32,7 +67,7 @@ const displayOpenCard = (cards) => {
         console.log(card);
         const openCards = document.createElement('div');
         openCards.innerHTML = `
-        <div class="h-full">
+        <div class="h-full" onclick="loadIssuesDetails(${card.id})">
                 <div class="card h-full w-full lg:w-60 bg-base-100 card-sm shadow-sm border border-gray-200 border-t-4 
                 ${card.status ==='open'?`border-t-[#00A96E]`:`border-t-[#A855F7]`}">
                 
@@ -93,7 +128,7 @@ const displayClosedCard = (cards) => {
         console.log(card);
         const closedCards = document.createElement('div');
         closedCards.innerHTML = `
-        <div class="h-full">
+        <div class="h-full" onclick="loadIssuesDetails(${card.id})">
                 <div class="card h-full w-full lg:w-60 bg-base-100 card-sm shadow-sm border border-gray-200 border-t-4 
                 ${card.status ==='open'?`border-t-[#00A96E]`:`border-t-[#A855F7]`}">
                 
@@ -124,42 +159,6 @@ const displayClosedCard = (cards) => {
         allIssues.append(closedCards);
     })
 }
-
-// display Modal for single issue
-const loadIssuesDetails= async(id) => {
-    const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
-    const res =await fetch(url);
-    const details = await res.json();
-    displayIssuesDetails(details.data);
-}
-const displayIssuesDetails = (modal) => {
-    console.log(modal);
-    const detailsBox = document.getElementById('details-container');
-    detailsBox.innerHTML=`
-    <div class="bg-base-100">
-            <h3 class="font-bold text-2xl">${modal.title}</h3>
-            <p class="gray mb-5">Opened by <span>${modal.assignee}</span> <span>${new Date(modal.updatedAt).toLocaleDateString()}</span></p>
-            <div class="flex gap-5">
-                                    <button class="btn border border-[#EF4444] rounded-lg bg-[#FEECEC] text-[#EF4444] ">Bug</button>
-                                    <button class="btn border border-[#D97706] rounded-lg bg-[#FDE68A] text-[#D97706] ">Help Wanted</button>
-                                </div>
-        <p class="gray mt-5 mb-10">${modal.description}</p>
-        <form class="flex gap-20">
-            <div>
-            <label>Assignee:</label>
-            <p class="font-bold">${modal.assignee}</p>
-            </div>
-            <div>
-                <label>Priority:</label> <br>
-                <p class="btn border rounded-lg px-7 ${modal.priority==='medium'?`bg-[#FDE68A] text-[#D97706] border-[#D97706]`:modal.priority === 'low' ? `bg-[#EEEFF2] text-[#9CA3AF] border-[#9CA3AF]`:`bg-[#FEECEC] text-[#EF4444] border-[#EF4444]`}"
-                >${modal.priority}</p>
-            </div>
-        </form>
-        </div>
-    `;
-    document.getElementById("my_modal_5").showModal();
-};
-
 
 
 // displayIssues function
@@ -222,7 +221,7 @@ const displayIssues = (issues) => {
     `
     btnContainer.append(btnDiv);
 }
-
+// Active btn styles
 function updateButtonStyle(clickedBtn){
     const buttons = document.querySelectorAll('.btn-style');
     buttons.forEach(btn => 
@@ -230,4 +229,27 @@ function updateButtonStyle(clickedBtn){
     );
     clickedBtn.classList.add('bg-primary', 'text-white');
 }
+
+const handleSearch = async () => {
+    const searchInput = document.getElementById('search-input'); 
+    const searchText = searchInput.value.trim();
+
+    if (searchText === "") {
+        loadIssues(); 
+        return;
+    }
+
+    const url = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}`;
+    
+    try {
+        const res = await fetch(url);
+        const json = await res.json();
+        
+        
+        displayIssues(json.data);
+    } catch (error) {
+        console.error("Search error:", error);
+    }
+};
+
 loadIssues();
