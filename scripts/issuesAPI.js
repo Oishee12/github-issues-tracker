@@ -244,9 +244,7 @@ const handleSearch = async () => {
     try {
         const res = await fetch(url);
         const json = await res.json();
-        
-        
-        displayIssues(json.data);
+       displayIssues(json.data);
     } catch (error) {
         console.error("Search error:", error);
     }
