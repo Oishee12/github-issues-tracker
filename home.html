@@ -42,31 +42,22 @@
 
     <!-- three buttons section -->
     <section>
-        <nav class="navbar bg-base-100 shadow-sm border border-gray-100  mt-8 lg:mt-12 max-w-screen-lg mx-auto">
-            <div class="flex justify-center items-center gap-2 lg:gap-3">
-                <button id="tab-all" onclick="switchedTab('all')" class="button btn text-newtral px-4 lg:px-14">All
-                </button>
-                <button id="tab-interview" onclick="switchedTab('interview')"
-                    class="button btn text-newtral px-4 lg:px-10">Open
-                </button>
-                <button id="tab-rejected" onclick="switchedTab('rejected')"
-                    class="button btn text-newtral px-4 lg:px-10">Closed
-                </button>
+        <nav class="navbar bg-base-100 shadow-sm border border-gray-100 mt-8 lg:mt-12 max-w-screen-lg mx-auto">
+            <div id="btn-container" class="flex justify-center items-center">
             </div>
         </nav>
     </section>
 
     <!-- 50 issues section -->
     <section>
-        <div
-            class="navbar bg-base-100 shadow-sm border border-gray-100 mt-4 max-w-screen-lg mx-auto flex justify-between">
+        <div class="navbar bg-base-100 border border-gray-200 mt-4 max-w-screen-lg mx-auto flex justify-between">
             <div class="flex justify-center items-center gap-2">
                 <div class="h-11 w-11 bg-[#ECE4FF] rounded-full flex justify-center items-center">
                     <img src="./assets/Aperture.png" alt="Aperture">
                 </div>
 
                 <div>
-                    <h3 class="font-semibold">0 Issues</h3>
+                    <h3 class="font-semibold"><span id="issue-number">0</span> Issues</h3>
                     <p class="gray lg:block hidden">Track and manage your project issues</p>
                 </div>
             </div>
@@ -80,40 +71,18 @@
             </div>
         </div>
 
-        <!-- all issues card -->
-        <div class="bg-base-100 max-w-screen-lg mx-auto grid grid-cols-2 lg:grid-cols-4">
-            
-                <div class="card-body border border-gray-200">
-                    <h2 class="card-title">Small Card</h2>
-                    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                    <div class="justify-end card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-                <div class="card-body border border-gray-200">
-                    <h2 class="card-title">Small Card</h2>
-                    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                    <div class="justify-end card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-                <div class="card-body border border-gray-200">
-                    <h2 class="card-title">Small Card</h2>
-                    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                    <div class="justify-end card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-                <div class="card-body border border-gray-200">
-                    <h2 class="card-title">Small Card</h2>
-                    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                    <div class="justify-end card-actions">
-                        <button class="btn btn-primary">Buy Now</button>
-                    </div>
-                </div>
-           
+        <!-- all issues div -->
+        <div id="all-issues" class="bg-base-100 border border-gray-200 max-w-screen-lg mx-auto p-10">
+            <!-- spinner -->
+            <div class="hidden">
+                <div id="loading-spinner" class=" flex justify-center my-10 ">
+                <span class="loading loading-spinner loading-lg"></span>
+            </div>
+            </div>
         </div>
     </section>
+
+    <script src="./scripts/issuesAPI.js"></script>
 </body>
 
 </html>
