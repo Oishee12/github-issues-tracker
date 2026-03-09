@@ -9,7 +9,7 @@ document.getElementById('signIn-btn').addEventListener('click', ()=>{
     const password = getValueFromInput('password');
 
     if(username==='admin' && password==='admin123'){
-        window.location.assign('/home.html')
+        window.location.assign('home.html')
     }
     else{
          alert('Use default username and password.')
